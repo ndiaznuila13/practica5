@@ -1,6 +1,13 @@
 import AppRouter from './routes/AppRouter';
+import { Toaster } from 'react-hot-toast';
+
 function App() {
-  return <AppRouter />;
+  return (
+    <>
+      <AppRouter />
+      <Toaster position="top-right" />
+    </>
+  );
 }
+
 export default App;
-{/* <button onClick={toggleTheme} className="btn-primary mx-auto block mt-4"></button> */}

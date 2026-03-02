@@ -4,6 +4,7 @@ import { CATEGORIES } from '../../utils/constants';
 import { getDueDateLabel, isOverdue } from '../../utils/dateHelpers';
 import { useTaskStore } from '../../store/taskStore';
 import { useUIStore } from '../../store/uiStore';
+import { toast } from 'react-hot-toast';
 
 export default function TaskCard({ task }) {
     const updateTaskInStore = useTaskStore((state) => state.updateTask);
@@ -30,8 +31,9 @@ export default function TaskCard({ task }) {
         const result = await updateTask(task.id, { completed: newStatus });
         if (result.success) {
             updateTaskInStore(task.id, { completed: newStatus });
+            toast.success(newStatus ? 'Tarea marcada como completada' : 'Tarea marcada como pendiente');
         } else {
-            window.alert('No se pudo actualizar la tarea');
+            toast.error('No se pudo actualizar la tarea');
         }
     };
 
@@ -42,8 +44,9 @@ export default function TaskCard({ task }) {
         const result = await deleteTask(task.id);
         if (result.success) {
             deleteTaskFromStore(task.id);
+            toast.success('Tarea eliminada');
         } else {
-            window.alert('No se pudo eliminar la tarea');
+            toast.error('No se pudo eliminar la tarea');
         }
     };
 

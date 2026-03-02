@@ -9,6 +9,7 @@ export const useTaskStore = create((set) => ({
     // Filtros activos
     currentFilter: 'all', // 'all' | 'completed' | 'pending'
     currentCategory: 'all', // 'all' | 'work' | 'personal' | 'shopping' | 'other'
+    searchQuery: '',
 
     // Reemplazar todas las tareas (usando llegan de Firestore)
     setTasks: (tasks) => set({ tasks, loading: false, error: null }),
@@ -35,6 +36,9 @@ export const useTaskStore = create((set) => ({
 
     // Cambiar categoría activa
     setCategory: (category) => set({ currentCategory: category }),
+
+    // Actualizar término de búsqueda
+    setSearchQuery: (query) => set({ searchQuery: query }),
 
     // Estado de carga y error
     setLoading: (loading) => set({ loading }),

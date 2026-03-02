@@ -3,13 +3,13 @@ import { useUIStore } from '../../store/uiStore';
 import { FILTERS, CATEGORIES } from '../../utils/constants';
 
 export default function TaskFilters() {
-    const { currentFilter, currentCategory, setFilter, setCategory } = useTaskStore();
+    const { currentFilter, currentCategory, searchQuery, setFilter, setCategory, setSearchQuery } = useTaskStore();
     const { theme } = useUIStore();
     const isDark = theme === 'dark';
 
     return (
         <div className={`rounded-lg shadow-md p-6 mb-6 transition-colors duration-300 ${isDark ? 'bg-gray-900 border border-gray-700' : 'bg-white'}`}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Filtro por estado */}
                 <div>
                     <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -55,6 +55,24 @@ export default function TaskFilters() {
                             </option>
                         ))}
                     </select>
+                </div>
+
+                {/* Búsqueda */}
+                <div>
+                    <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                        Buscar tareas
+                    </label>
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Título o descripción"
+                        className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-300 ${
+                            isDark
+                                ? 'bg-gray-700 border-gray-600 text-gray-200 placeholder-gray-400'
+                                : 'bg-white border-gray-300 text-gray-800 placeholder-gray-500'
+                        }`}
+                    />
                 </div>
             </div>
         </div>

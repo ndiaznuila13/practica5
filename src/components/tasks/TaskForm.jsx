@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useAuthStore } from '../../store/authStore';
 import { useUIStore } from '../../store/uiStore';
 import { createTask, updateTask } from '../../services/taskService';
+import { toast } from 'react-hot-toast';
 import { CATEGORIES, PRIORITIES } from '../../utils/constants';
 
 export default function TaskForm({ onClose, taskToEdit = null }) {
@@ -47,9 +48,12 @@ export default function TaskForm({ onClose, taskToEdit = null }) {
             : await createTask(user.uid, taskData);
 
         if (result.success) {
+            toast.success(isEditing ? 'Tarea actualizada' : 'Tarea creada');
             onClose();
         } else {
-            setError(isEditing ? 'Error al actualizar la tarea' : 'Error al crear la tarea');
+            const message = isEditing ? 'Error al actualizar la tarea' : 'Error al crear la tarea';
+            setError(message);
+            toast.error(message);
         }
         setLoading(false);
     };

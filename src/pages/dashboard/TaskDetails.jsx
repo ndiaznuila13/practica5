@@ -5,6 +5,7 @@ import { CATEGORIES, PRIORITIES } from '../../utils/constants';
 import { formatDateTime, getDueDateLabel, isOverdue } from '../../utils/dateHelpers';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import TaskForm from '../../components/tasks/TaskForm';
+import { toast } from 'react-hot-toast';
 
 export default function TaskDetails() {
     const { taskId } = useParams(); // Obtener ID de la URL
@@ -31,15 +32,20 @@ export default function TaskDetails() {
             completed: !task.completed
         });
         if (result.success) {
-            // Actualizar estado local
             setTask({ ...task, completed: !task.completed });
+            toast.success('Estado actualizado');
+        } else {
+            toast.error('No se pudo actualizar la tarea');
         }
     };
     const handleDelete = async () => {
         if (window.confirm('¿Estás seguro de eliminar esta tarea?')) {
             const result = await deleteTask(taskId);
             if (result.success) {
+                toast.success('Tarea eliminada');
                 navigate('/dashboard');
+            } else {
+                toast.error('No se pudo eliminar la tarea');
             }
         }
     };
